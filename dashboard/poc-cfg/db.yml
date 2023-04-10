@@ -1,0 +1,5 @@
+hostname : "172.17.0.2"
+port :     "3306"
+username : "root"
+password : "pass"
+database : "classicmodels"

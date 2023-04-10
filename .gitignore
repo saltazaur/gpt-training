@@ -1,5 +1,5 @@
 # OpenAI API Key
-dashboard/poc-cfg/*
+dashboard/poc-cfg/OpenAI.yml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -16,5 +16,14 @@ build-streamlit-container:
 run-app:
 	docker run --name dashboard \
 		--mount type=bind,src=${PWD}/dashboard,dst=/app/ \
+		-e OPENAI_API_KEY=$(OPENAI_API_KEY) \
+		-p 8501:8501 streamlit \
+		streamlit run /app/app.py --server.port=8501 --server.address=0.0.0.0
+
+refresh-app:
+	docker rm dashboard
+	docker run --name dashboard \
+		--mount type=bind,src=${PWD}/dashboard,dst=/app/ \
+		-e OPENAI_API_KEY=$(OPENAI_API_KEY) \
 		-p 8501:8501 streamlit \
 		streamlit run /app/app.py --server.port=8501 --server.address=0.0.0.0

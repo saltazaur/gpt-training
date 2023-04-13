@@ -5,3 +5,4 @@ streamlit-chat==0.0.2.2
 sqlvalidator==0.0.20
 streamlit_option_menu==0.3.2
 pyyaml==6.0
+openai

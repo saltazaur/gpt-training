@@ -3,8 +3,6 @@ import secured_app
 import sb                       # refers to sidebar
 import home
 import sandbox
-import chat
-
 
 
 # Authentication check
@@ -17,12 +15,8 @@ side_bar =  sb.sidebar_menu()
 
 if side_bar == "home":
     home.run_app()
-
 elif side_bar == "sandbox":
     sandbox.run_app()
-
-elif side_bar == "chat":
-    chat.run_app()
 
 else:
     st.warning('not implemented yet')

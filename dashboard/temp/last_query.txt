@@ -1,0 +1,1 @@
+SELECT  productName, orderDate, productCode FROM products, orders WHERE orderDate < 20220402

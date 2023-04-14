@@ -40,8 +40,8 @@ def run_app():
     left, right = form_1.columns([4, 1])
 
     with left:
-        database_structure = st.text_area("database structure: ",value=database_schema_string, height=410)
-    start_phrase = database_structure+"/n/n"+ form_1.text_area("please write your request here: ",value="A query to get the product names and codes that were ordered before date 20220402", height=50)
+        database_structure = st.text_area("Database structure: ",value=database_schema_string, height=410)
+    start_phrase = database_structure+"/n/n"+ form_1.text_area("Your question: ",value="A query to get the product names and codes that were ordered before date 20220402", height=50)
     start_phrase = start_phrase + "\nSELECT"
 
     with right:

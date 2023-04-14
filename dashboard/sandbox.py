@@ -31,7 +31,7 @@ def run_app():
     else:
         database_schema_string = default_schema
 
-    st.markdown("<p style='text-align:Left ;font-family:Graphik;font-weight: bold;color:hsl(0, 100%, 0%); font-size:30px;'>Natural Language to SQL engine based on GPT-3 DEMO</p>",unsafe_allow_html=True)
+    st.markdown("<p style='text-align:Left ;font-family:Graphik;font-weight: bold;color:hsl(0, 100%, 0%); font-size:30px;'>Natural Language to SQL engine based on OpenAI LLMs</p>",unsafe_allow_html=True)
     
     st.write("")
     st.write("")
@@ -42,17 +42,15 @@ def run_app():
     with left:
         database_structure = st.text_area("Database structure: ",value=database_schema_string, height=410)
     start_phrase = database_structure+"/n/n"+ form_1.text_area("Your question: ",value="A query to get the product names and codes that were ordered before date 20220402", height=50)
-    start_phrase = start_phrase + "\nSELECT"
 
     with right:
         st.write("   Tuning:")
         st.write("___")
-
-        #model = st.number_input("Model", min_value=2, max_value=3, value=3)
         model = st.selectbox('Model',('gpt-3.5-turbo','text-davinci-003', 'text-embedding-ada-002'))
         temperature = st.number_input("Temperature", min_value=.0, max_value=1., value=.7, step=.01)
         max_tokens = st.number_input("Max_tokens", min_value=50, value=250)
-    
+        keyword = st.selectbox("Word added after a question", ('SELECT','WITH', '\n','def '))
+
     get_query = form_1.form_submit_button("Get query")
 
     if get_query:

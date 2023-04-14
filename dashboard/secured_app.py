@@ -4,12 +4,27 @@ import streamlit as st
 
 def check_password():
 
+
+
+
     st.set_page_config(page_title="ACN-GPT ",
                    page_icon='images/favicon_accenture.png',
                    layout="wide",
                    initial_sidebar_state="expanded"
                    )
 
+    st.markdown(
+    """
+    <style>
+    body {
+    background-image: url("data:image/png;base64,dashboard/images/background.png");
+    background-size: cover
+    }
+    </style>
+    """,
+    unsafe_allow_html=True)
+    
+    
     #removing the streamlit brandingin the page
     hide_streamlit_style = """ <style> #MainMenu {visibility: hidden;} footer {visibility: hidden;} </style> """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
@@ -19,7 +34,7 @@ def check_password():
     col1, _, col2= st.columns([1, 1, 1])
     col1.image('images/accenture_logo.png', width=250)
     col2.image('images/openai_logo.png', width=250)
-    
+
 
     def password_entered():
 

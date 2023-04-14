@@ -22,6 +22,3 @@ def run_app():
     st.write("---")
     #st.image("images/ner_auto_image.png", width=1760,use_column_width='auto')
     st.markdown("<p style='text-align:Left ;font-family:Graphik;font-weight: bold;color:hsl(0, 100%, 0%); font-size:30px;'></p>",unsafe_allow_html=True)
-
-    openai.api_key = os.getenv("OPENAI_API_KEY")
-    st.write("API KEY",openai.api_key)

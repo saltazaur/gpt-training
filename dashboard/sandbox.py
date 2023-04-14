@@ -1,5 +1,5 @@
 import streamlit as st
-import gpt
+import openai
 import json
 import pandas as pd
 from db import get_database_schema, extract_schema_str, execute_query, get_cols_from_query, test_query, format_database_schema
@@ -49,29 +49,27 @@ def run_app():
         st.write("___")
 
         #model = st.number_input("Model", min_value=2, max_value=3, value=3)
-        model = st.selectbox('Model',('GPT','Codex'))
+        model = st.selectbox('Model',('gpt-3.5-turbo','text-davinci-003', 'text-embedding-ada-002'))
         temperature = st.number_input("Temperature", min_value=.0, max_value=1., value=.7, step=.01)
         max_tokens = st.number_input("Max_tokens", min_value=50, value=250)
-        stop = st.multiselect('stop',[';', '#','##','</code>', 'A query', '\n'],[';','</code>'])
     
     get_query = form_1.form_submit_button("Get query")
 
     if get_query:
         with st.spinner("Generating query..."):
-            query_ = gpt.get_response(start_phrase, str(model), float(temperature), int(max_tokens), stop)
-            
-            query_ = "SELECT " + query_
+            query_ = openai.Completion.create(
+                            model=model,  # The name of the GPT-3 language model to use
+                            prompt=start_phrase,  # The initial text prompt to generate text from
+                            temperature=temperature,  # Controls the randomness and creativity of the generated text
+                            max_tokens=max_tokens,  # The maximum length of the generated text in terms of tokens (words or symbols)
+                            )
+            query_ = "SELECT " + query_["choices"]["text"]
             with open('temp/last_query.txt','w') as f:
                 f.write(query_)
             
             # Save result to session state, to display it again upon query execution
             st.session_state.last_generated_query = query_
             code_raw = st.code(f"{query_}")
-
-            st.info('Testing query...')
-            tests_pos, tests_neg = test_query(query_)
-            st.success(tests_pos)
-            st.error(tests_neg)
 
     run_btn = st.button(label='Run query to database')
     if run_btn:

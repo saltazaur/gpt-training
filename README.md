@@ -32,7 +32,7 @@ make build-streamlit-container
 make run-app
 ```
 6. Visit `localhost:8501` to play with the app. 
-If you encounter error realted to database conectivity - change `hostname` in `dashboard\bat-poc-cfg\db.yml` to the one you get in step 3.
+If you encounter error realted to database conectivity - change `hostname` in `dashboard\poc-cfg\db.yml` to the one you get in step 3.
 
 ## Using Azure OpenAI
 * OpenAI library with Microsoft Azure endpoints: https://github.com/openai/openai-python#microsoft-azure-endpoints 

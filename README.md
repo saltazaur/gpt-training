@@ -27,7 +27,7 @@ You may need to check what is IP of your MySQL container
 ```
 make build-streamlit-container
 ```
-5. Run NLQ2SQL app:
+5. (Revisit 1.) Run NLQ2SQL app:
 ```
 make run-app
 ```

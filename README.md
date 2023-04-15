@@ -1,6 +1,6 @@
 # NLQ2SQL Natural Language Question to SQL query powered by OpenAI Large Language Models
 ## To get started
-All commands needed to run the app in Docker containers are written down in Makefile.
+All commands needed to run the app are written down in Makefile.
 
 1. Define environmental variable `OPENAI_API_KEY` with your OpenAI API Key (https://platform.openai.com/overview):
 ```
@@ -33,6 +33,9 @@ make run-app
 ```
 6. Visit `localhost:8501` to play with the app. 
 If you encounter error realted to database conectivity - change `hostname` in `dashboard\poc-cfg\db.yml` to the one you get in step 3.
+
+### Database
+An examplary retail database is used in this prototype: https://www.mysqltutorial.org/mysql-sample-database.aspx
 
 ## Using Azure OpenAI
 * OpenAI library with Microsoft Azure endpoints: https://github.com/openai/openai-python#microsoft-azure-endpoints 

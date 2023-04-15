@@ -6,15 +6,7 @@ from db import get_database_schema, extract_schema_str, execute_query, get_cols_
 
 def run_app():
 
-    default_schema = """### MySQL tables, with their properties:
-# customers (customerNumber, customerName, contactLastName, contactFirstName, phone, addressLine1, addressLine2, city, state, postalCode, country, salesRepEmployeeNumber, creditLimit,)
-# employees (employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle,)
-# offices (officeCode, city, phone, addressLine1, addressLine2, state, country, postalCode, territory,)
-# orderdetails (orderNumber, productCode, quantityOrdered, priceEach, orderLineNumber,)
-# orders (orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber,)
-# payments (customerNumber, checkNumber, paymentDate, amount,)
-# productlines (productLine, textDescription, htmlDescription, image,)
-# products (productCode, productName, productLine, productScale, productVendor, productDescription, quantityInStock, buyPrice, MSRP,)"""
+    default_schema = """ """
 
     connect_db = st.button('Get schema')
 
@@ -41,27 +33,37 @@ def run_app():
 
     with left:
         database_structure = st.text_area("Database structure: ",value=database_schema_string, height=410)
-    start_phrase = database_structure+"/n/n"+ form_1.text_area("Your question: ",value="A query to get the product names and codes that were ordered before date 20220402", height=50)
+    start_phrase = database_structure+"/n"+ form_1.text_area("Your question: ",value="A query to get the product names and codes that were ordered before date 20220402", height=50)
 
     with right:
         st.write("   Tuning:")
         st.write("___")
-        model = st.selectbox('Model',('gpt-3.5-turbo','text-davinci-003', 'text-embedding-ada-002'))
+        model = st.selectbox('Model',('gpt-3.5-turbo','text-davinci-003','gpt-4', 'text-ada-001'))
         temperature = st.number_input("Temperature", min_value=.0, max_value=1., value=.7, step=.01)
         max_tokens = st.number_input("Max_tokens", min_value=50, value=250)
-        keyword = st.selectbox("Word added after a question", ('SELECT','WITH', '\n','def '))
+        keyword = st.selectbox("Word added after a question", (' SELECT ',' WITH ', '','\n def '))
 
     get_query = form_1.form_submit_button("Get query")
 
     if get_query:
         with st.spinner("Generating query..."):
-            query_ = openai.Completion.create(
-                            model=model,  # The name of the GPT-3 language model to use
-                            prompt=start_phrase,  # The initial text prompt to generate text from
-                            temperature=temperature,  # Controls the randomness and creativity of the generated text
-                            max_tokens=max_tokens,  # The maximum length of the generated text in terms of tokens (words or symbols)
-                            )
-            query_ = "SELECT " + query_["choices"]["text"]
+            prompt=start_phrase + keyword
+
+            if model in ['text-davinci-003', 'text-ada-001']:
+                query_ = openai.Completion.create(
+                                model=model,  # The name of the GPT-3 language model to use
+                                prompt=prompt,  # The initial text prompt to generate text from
+                                temperature=temperature,  # Controls the randomness and creativity of the generated text
+                                max_tokens=max_tokens,  # The maximum length of the generated text in terms of tokens (words or symbols)
+                                )
+                query_ = keyword + query_["choices"][0]["text"]
+
+            elif model in ['gpt-3.5-turbo', 'gpt-4']:
+                query_ = openai.ChatCompletion.create(
+                                model="gpt-3.5-turbo",
+                                messages=[{"role": "user", "content": prompt},])
+                query_ = keyword + query_["choices"][0]["message"]["content"]
+            
             with open('temp/last_query.txt','w') as f:
                 f.write(query_)
             

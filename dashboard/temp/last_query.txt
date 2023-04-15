@@ -1,1 +1,5 @@
-SELECT  productName, orderDate, productCode FROM products, orders WHERE orderDate < 20220402
+SELECT products.productCode, products.productName
+FROM products
+JOIN orderdetails ON products.productCode = orderdetails.productCode
+JOIN orders ON orderdetails.orderNumber = orders.orderNumber
+WHERE orders.orderDate < '2022-04-02';

@@ -6,7 +6,18 @@ from db import get_database_schema, extract_schema_str, execute_query, get_cols_
 
 def run_app():
 
-    default_schema = """ """
+    default_schema = """ 
+    ### MySQL tables, with their properties:
+    # customers (customerNumber, customerName, contactLastName, contactFirstName, phone, addressLine1, addressLine2, city, state, postalCode, country, salesRepEmployeeNumber, creditLimit,)
+    # employees (employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle,)
+    # offices (officeCode, city, phone, addressLine1, addressLine2, state, country, postalCode, territory,)
+    # orderdetails (orderNumber, productCode, quantityOrdered, priceEach, orderLineNumber,)
+    # orders (orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber,)
+    # payments (customerNumber, checkNumber, paymentDate, amount,)
+    # productlines (productLine, textDescription, htmlDescription, image,)
+    # products (productCode, productName, productLine, productScale, productVendor, productDescription, quantityInStock, buyPrice, MSRP,)
+
+    """
 
     connect_db = st.button('Get schema')
 
